@@ -6,6 +6,7 @@ public class Graph {
 	public int source;
 	public int sink;
 	public int numOfNodes;
-	
+	public int numOfStages;
+	public float[][] z;
 	
 }
