@@ -1,5 +1,10 @@
 package edu.georgiasouthern.math.jgraph;
 
+import java.awt.geom.Point2D;
+
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.GraphConstants;
+
 public class GraphUtilities {
 
 	public GraphUtilities() {
@@ -60,6 +65,44 @@ public class GraphUtilities {
 	 */
 	public static void setEdgeThickness(GraphPanel graphPanel, int s, int t, int w) {
 		graphPanel.setEdgeThickness("" + s, "" + t, w);
+	}
+	/**
+	 * Sets positions for the graph nodes.
+	 * @param graphPanel
+	 * @param coords comma separated list of coordinates
+	 */
+	public static void setNodesPositions(GraphPanel graphPanel, String coords) {
+		String[] pos = coords.split(",");
+		for (int i = 0; i < pos.length; i += 3) {
+			String n = pos[i];
+			int x = Integer.valueOf(pos[i+1].trim()).intValue();
+			int y = Integer.valueOf(pos[i+2].trim()).intValue();
+			graphPanel.setNodePosition(n, x, y);
+		}
+	}
+	/**
+	 * Returns a list of comma separated values for the coordinates of the nodes.
+	 * @param graphPanel
+	 * @return
+	 */
+	public static String getNodesPositions(GraphPanel graphPanel) {
+		StringBuilder buf = new StringBuilder();
+		Object[] list = graphPanel.getVertices();
+		for (int i = 0; i < list.length; i++) {
+			Object v = list[i];
+			if (v instanceof DefaultGraphCell) {
+				DefaultGraphCell cell = (DefaultGraphCell) v;
+				NodeData nd = (NodeData) cell.getUserObject();
+				String n = nd.getDescriptor();
+				Point2D p = graphPanel.getNodePosition(n);
+				if (p == null) {
+					continue;
+				}
+				buf.append(nd.getDescriptor()).append(",").append((int) p.getX()).append(",").append((int) p.getY()).append(",");
+			}
+		}
+		
+		return buf.toString();
 	}
 }
 

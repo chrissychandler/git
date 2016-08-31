@@ -1,10 +1,11 @@
 package edu.georgiasouthern.math.fordfulkerson;
 import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 import java.util.Set;
 
 import edu.georgiasouthern.math.jgraph.GraphFrame;
@@ -176,12 +177,18 @@ public class FordFulkerson
         System.out.println("Enter the sink of the graph");
         sink = scanner.nextInt();*/
         
-        GraphFrame frame = GraphFrame.showFrame();
+        final GraphFrame frame = GraphFrame.showFrame();
 
 		//display a new graph
 		GraphUtilities.createNewGraph(frame.getGraphPanel(), graph);
 		GraphUtilities.labelGraphEdges(frame.getGraphPanel(), graph);
 		frame.getGraphPanel().layoutGraph3();
+		frame.addWindowListener(new WindowAdapter() {
+			  public void windowClosing(WindowEvent we) {
+				    String coords = GraphUtilities.getNodesPositions(frame.getGraphPanel());
+				    System.err.println(coords);
+				  }
+				});
  
         FordFulkerson fordFulkerson = new FordFulkerson(numberOfNodes);
         maxFlow = fordFulkerson.fordFulkerson(graph, source, sink);

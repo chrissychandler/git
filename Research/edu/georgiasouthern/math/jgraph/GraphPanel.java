@@ -5,8 +5,10 @@ package edu.georgiasouthern.math.jgraph;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -194,6 +196,43 @@ public class GraphPanel extends JPanel {
 		return true;
 	}
 	/**
+	 * Returns the node coordinates.
+	 * @param n
+	 * @return
+	 */
+	public Point getNodePosition(String n) {
+		DefaultGraphCell cell = findGraphCell(n);
+		if (cell == null) {
+			return null;
+		}
+		
+		JGraphFacade facade = new JGraphFacade(jgraph.getGraphLayoutCache());
+		Rectangle r = facade.getBounds(cell).getBounds();
+		
+		Point p = new Point((int) r.getX(), (int) r.getY());
+		
+		return p;
+	}
+	/**
+	 * Sets the coordinates for the given node.
+	 * @param n
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean setNodePosition(String n, int x, int y) {
+		DefaultGraphCell cell = findGraphCell(n);
+		if (cell == null) {
+			return false;
+		}
+		
+		Point2D p = new Point(x, y);
+		GraphConstants.setOffset(cell.getAttributes(), p);
+		//JGraphFacade facade = new JGraphFacade(jgraph.getGraphLayoutCache());
+		//facade.setLocation(cell, x, y);
+		return true;
+	}
+	/**
 	 * Creates a new graph node.
 	 * @param id
 	 * @param descriptor
@@ -284,6 +323,13 @@ public class GraphPanel extends JPanel {
 		}
 		
 		return null;
+	}
+	/**
+	 * Returns all grph vertices.
+	 * @return
+	 */
+	public Object[] getVertices() {
+		return getVertices(jgraph);
 	}
 	/**
 	 * Compare for equality two node descriptors.
