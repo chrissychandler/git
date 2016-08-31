@@ -8,5 +8,6 @@ public class Graph {
 	public int numOfNodes;
 	public int numOfStages;
 	public float[][] z;
+	public String coords;
 	
 }

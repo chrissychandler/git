@@ -226,10 +226,12 @@ public class GraphPanel extends JPanel {
 			return false;
 		}
 		
-		Point2D p = new Point(x, y);
-		GraphConstants.setOffset(cell.getAttributes(), p);
-		//JGraphFacade facade = new JGraphFacade(jgraph.getGraphLayoutCache());
-		//facade.setLocation(cell, x, y);
+		//Point2D p = new Point(x, y);
+		//GraphConstants.setOffset(cell.getAttributes(), p);
+		JGraphFacade facade = new JGraphFacade(jgraph.getGraphLayoutCache());
+		facade.setLocation(cell, x, y);
+		Map nested = facade.createNestedMap(true, false);
+		jgraph.getGraphLayoutCache().edit(nested);
 		return true;
 	}
 	/**

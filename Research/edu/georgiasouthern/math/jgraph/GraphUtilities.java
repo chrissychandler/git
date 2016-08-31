@@ -79,6 +79,7 @@ public class GraphUtilities {
 			int y = Integer.valueOf(pos[i+2].trim()).intValue();
 			graphPanel.setNodePosition(n, x, y);
 		}
+		
 	}
 	/**
 	 * Returns a list of comma separated values for the coordinates of the nodes.

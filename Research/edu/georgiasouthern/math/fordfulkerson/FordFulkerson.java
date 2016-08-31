@@ -136,10 +136,11 @@ public class FordFulkerson
         int sink;
         int maxFlow;
         
-        graph = GraphData.num1.matrix;
-        numberOfNodes = GraphData.num1.numOfNodes;
+        numberOfNodes = GraphData.num1.numOfNodes + (GraphData.num1.numOfStages - 1) * 2 * GraphData.num1.numOfNodes;
         source = GraphData.num1.source;
-        sink = GraphData.num1.sink;
+        sink = numberOfNodes;//GraphData.num1.sink;
+        graph = GraphData.computeMatrix(GraphData.num1);//GraphData.num1.matrix;
+        
         
         int[][] newGraph = new int[graph.length * 2][graph.length * 2];
 		
@@ -182,7 +183,8 @@ public class FordFulkerson
 		//display a new graph
 		GraphUtilities.createNewGraph(frame.getGraphPanel(), graph);
 		GraphUtilities.labelGraphEdges(frame.getGraphPanel(), graph);
-		frame.getGraphPanel().layoutGraph3();
+		//frame.getGraphPanel().layoutGraph3();
+		GraphUtilities.setNodesPositions(frame.getGraphPanel(), GraphData.num1.coords);
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent we) {
 				    String coords = GraphUtilities.getNodesPositions(frame.getGraphPanel());
@@ -195,14 +197,6 @@ public class FordFulkerson
         System.out.println("The Max Flow is " + maxFlow);
         //scanner.close();
         
-        GraphFrame frame2 = GraphFrame.showFrame();
-        GraphUtilities.createNewGraph(frame2.getGraphPanel(), fordFulkerson.getResidualGraph());
-		GraphUtilities.labelGraphEdges(frame2.getGraphPanel(), fordFulkerson.getResidualGraph());
-		frame2.getGraphPanel().layoutGraph3();
-		
-		GraphFrame frame3 = GraphFrame.showFrame();
-		GraphUtilities.createNewGraph(frame3.getGraphPanel(), newGraph);
-		GraphUtilities.labelGraphEdges(frame3.getGraphPanel(), newGraph);
-		frame3.getGraphPanel().layoutGraph3();
+       
     }
 }
