@@ -21,6 +21,8 @@ public class GraphFrame extends JFrame {
 
 	private static final String TITLE = "Network Flow";
 	
+	private static GraphFrame instance;
+	
 	
 	private GraphPanel graphPanel;
 
@@ -40,7 +42,7 @@ public class GraphFrame extends JFrame {
 	 */
 	public static GraphFrame showFrame() {
 		
-		GraphFrame instance = new GraphFrame();
+		instance = new GraphFrame();
 		
 		instance.setVisible(true);
 		
